@@ -1,14 +1,14 @@
 //одна задача
 
-import React, { Component } from 'react'
-import { formatDistanceToNow } from 'date-fns'
-import { enUS } from 'date-fns/locale'
-import '../task/task.css'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import { enUS } from 'date-fns/locale';
+import '../task/task.css';
+import PropTypes from 'prop-types';
 
 export default class Task extends Component {
   render() {
-    const { task, onChange, onDelete, onEdit, onUpdate, isEditing, editingText, setEditingTaskText } = this.props
+    const { task, onChange, onDelete, onEdit, onUpdate, isEditing, editingText, setEditingTaskText } = this.props;
     return (
       <li className={`${isEditing ? 'editing' : ''} ${task.checked ? 'completed' : ''}`}>
         <div className="view">
@@ -45,19 +45,19 @@ export default class Task extends Component {
             onBlur={() => onUpdate(task.id, editingText)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                onUpdate(task.id, editingText)
+                onUpdate(task.id, editingText);
               }
             }}
           />
         )}
       </li>
-    )
+    );
   }
 }
 
 Task.defaultProps = {
   task: {},
-}
+};
 
 Task.propTypes = {
   task: PropTypes.object,
@@ -68,4 +68,4 @@ Task.propTypes = {
   isEditing: PropTypes.bool,
   editingText: PropTypes.string,
   setEditingTaskText: PropTypes.func.isRequired,
-}
+};

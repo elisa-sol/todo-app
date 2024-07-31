@@ -1,12 +1,12 @@
 // фильтры в футере
 
-import React, { Component } from 'react'
-import '../tasksFilter/tasksFilter.css'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import '../tasksFilter/tasksFilter.css';
+import PropTypes from 'prop-types';
 
 export default class TasksFilter extends Component {
   render() {
-    const { filter, setTaskFilter } = this.props
+    const { filter, setTaskFilter } = this.props;
     return (
       <ul className="filters">
         <li>
@@ -27,15 +27,15 @@ export default class TasksFilter extends Component {
           </button>
         </li>
       </ul>
-    )
+    );
   }
 }
 
 TasksFilter.defaultProps = {
   filter: 'all',
-}
+};
 
 TasksFilter.propTypes = {
   filter: PropTypes.string,
   setTaskFilter: PropTypes.func.isRequired,
-}
+};

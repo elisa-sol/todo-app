@@ -1,16 +1,27 @@
 //одна задача
 
-import React, { Component } from 'react';
-import { formatDistanceToNow } from 'date-fns';
-import { enUS } from 'date-fns/locale';
-import '../task/task.css';
-import PropTypes from 'prop-types';
+import { Component } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { enUS } from "date-fns/locale";
+import "../task/task.css";
+import PropTypes from "prop-types";
 
 export default class Task extends Component {
   render() {
-    const { task, onChange, onDelete, onEdit, onUpdate, isEditing, editingText, setEditingTaskText } = this.props;
+    const {
+      task,
+      onChange,
+      onDelete,
+      onEdit,
+      onUpdate,
+      isEditing,
+      editingText,
+      setEditingTaskText,
+    } = this.props;
     return (
-      <li className={`${isEditing ? 'editing' : ''} ${task.checked ? 'completed' : ''}`}>
+      <li
+        className={`${isEditing ? "editing" : ""} ${task.checked ? "completed" : ""}`}
+      >
         <div className="view">
           <input
             id={`task-${task.id}`}
@@ -31,9 +42,17 @@ export default class Task extends Component {
             </span>
           </label>
 
-          <button type="button" className="icon icon-edit" onClick={() => onEdit(task.id, task.text)}></button>
+          <button
+            type="button"
+            className="icon icon-edit"
+            onClick={() => onEdit(task.id, task.text)}
+          ></button>
 
-          <button type="button" className="icon icon-destroy" onClick={() => onDelete(task.id)}></button>
+          <button
+            type="button"
+            className="icon icon-destroy"
+            onClick={() => onDelete(task.id)}
+          ></button>
         </div>
 
         {isEditing && (
@@ -44,7 +63,7 @@ export default class Task extends Component {
             onChange={(e) => setEditingTaskText(e.target.value)}
             onBlur={() => onUpdate(task.id, editingText)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 onUpdate(task.id, editingText);
               }
             }}

@@ -1,12 +1,13 @@
 // форма для добавления
 
-import React, { Component } from 'react';
-import '../newTaskForm/newTaskForm.css';
-import PropTypes from 'prop-types';
+import { Component } from "react";
+import "../newTaskForm/newTaskForm.css";
+import PropTypes from "prop-types";
 
 export default class NewTaskForm extends Component {
   render() {
-    const { placeholder, newTask, handleInputChange, handleKeyPress } = this.props;
+    const { placeholder, newTask, handleInputChange, handleKeyPress } =
+      this.props;
     return (
       <div>
         <input
@@ -23,7 +24,7 @@ export default class NewTaskForm extends Component {
 }
 
 NewTaskForm.defaultProps = {
-  placeholder: 'What needs to be done?',
+  placeholder: "What needs to be done?",
 };
 
 NewTaskForm.propTypes = {

@@ -1,19 +1,19 @@
 //верхний компонент
 
-import React, { Component } from 'react';
-import NewTaskForm from '../newTaskForm/newTaskForm';
-import TaskList from '../taskList/taskList';
-import Footer from '../footer/footer';
+import { Component } from "react";
+import NewTaskForm from "./assets/newTaskForm/newTaskForm.jsx";
+import TaskList from "./assets/taskList/taskList.jsx";
+import Footer from "./assets/footer/footer.jsx";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       tasks: [],
-      newTask: '',
+      newTask: "",
       editingTaskId: null,
-      editingTaskText: '',
-      filter: 'all',
+      editingTaskText: "",
+      filter: "all",
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -34,7 +34,7 @@ export default class App extends Component {
   }
 
   addTask() {
-    if (this.state.newTask.trim() !== '') {
+    if (this.state.newTask.trim() !== "") {
       const newTaskObject = {
         id: Date.now(),
         text: this.state.newTask,
@@ -43,7 +43,7 @@ export default class App extends Component {
       };
       this.setState((prevState) => ({
         tasks: [...prevState.tasks, newTaskObject],
-        newTask: '',
+        newTask: "",
       }));
     }
   }
@@ -59,17 +59,19 @@ export default class App extends Component {
   }
 
   updateTask(id, newText) {
-    if (this.state.editingTaskText.trim() !== '') {
+    if (this.state.editingTaskText.trim() !== "") {
       this.setState((prevState) => ({
-        tasks: prevState.tasks.map((t) => (t.id === id ? { ...t, text: newText } : t)),
+        tasks: prevState.tasks.map((t) =>
+          t.id === id ? { ...t, text: newText } : t,
+        ),
         editingTaskId: null,
-        editingTaskText: '',
+        editingTaskText: "",
       }));
     }
   }
 
   handleKeyPress(event) {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       this.addTask();
     }
   }
@@ -95,11 +97,11 @@ export default class App extends Component {
   }
 
   getFilteredTasks() {
-    if (this.state.filter === 'all') {
+    if (this.state.filter === "all") {
       return this.state.tasks;
-    } else if (this.state.filter === 'active') {
+    } else if (this.state.filter === "active") {
       return this.state.tasks.filter((task) => !task.checked);
-    } else if (this.state.filter === 'completed') {
+    } else if (this.state.filter === "completed") {
       return this.state.tasks.filter((task) => task.checked);
     }
     return this.state.tasks;
@@ -124,7 +126,9 @@ export default class App extends Component {
           onUpdate={this.updateTask}
           editingTaskId={this.state.editingTaskId}
           editingTaskText={this.state.editingTaskText}
-          setEditingTaskText={(text) => this.setState({ editingTaskText: text })}
+          setEditingTaskText={(text) =>
+            this.setState({ editingTaskText: text })
+          }
         />
 
         <Footer

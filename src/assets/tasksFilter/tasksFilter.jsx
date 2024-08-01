@@ -1,50 +1,41 @@
 // фильтры в футере
 
-import { Component } from "react";
-import "../tasksFilter/tasksFilter.css";
-import PropTypes from "prop-types";
+import React from 'react';
 
-export default class TasksFilter extends Component {
-  render() {
-    const { filter, setTaskFilter } = this.props;
-    return (
-      <ul className="filters">
-        <li>
-          <button
-            className={filter === "all" ? "selected" : ""}
-            onClick={() => setTaskFilter("all")}
-          >
-            All
-          </button>
-        </li>
+import './tasksFilter.css';
+import PropTypes from 'prop-types';
 
-        <li>
-          <button
-            className={filter === "active" ? "selected" : ""}
-            onClick={() => setTaskFilter("active")}
-          >
-            Active
-          </button>
-        </li>
+function TasksFilter({ filter = 'all', setTaskFilter }) {
+  return (
+    <ul className="filters">
+      <li>
+        <button type="button" className={filter === 'all' ? 'selected' : ''} onClick={() => setTaskFilter('all')}>
+          All
+        </button>
+      </li>
 
-        <li>
-          <button
-            className={filter === "completed" ? "selected" : ""}
-            onClick={() => setTaskFilter("completed")}
-          >
-            Completed
-          </button>
-        </li>
-      </ul>
-    );
-  }
+      <li>
+        <button type="button" className={filter === 'active' ? 'selected' : ''} onClick={() => setTaskFilter('active')}>
+          Active
+        </button>
+      </li>
+
+      <li>
+        <button
+          type="button"
+          className={filter === 'completed' ? 'selected' : ''}
+          onClick={() => setTaskFilter('completed')}
+        >
+          Completed
+        </button>
+      </li>
+    </ul>
+  );
 }
 
-TasksFilter.defaultProps = {
-  filter: "all",
-};
-
 TasksFilter.propTypes = {
-  filter: PropTypes.string,
+  filter: PropTypes.string.isRequired,
   setTaskFilter: PropTypes.func.isRequired,
 };
+
+export default TasksFilter;

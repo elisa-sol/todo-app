@@ -1,60 +1,46 @@
-// список задач
+import React from 'react';
 
-import { Component } from "react";
-import "../taskList/taskList.css";
-import Task from "../task/task.jsx";
-import PropTypes from "prop-types";
+import './taskList.css';
+import PropTypes from 'prop-types';
 
-export default class TaskList extends Component {
-  render() {
-    const {
-      tasks,
-      onChange,
-      onDelete,
-      onEdit,
-      onUpdate,
-      editingTaskId,
-      editingTaskText,
-      setEditingTaskText,
-    } = this.props;
-    return (
-      <ul className="todo-list">
-        {tasks.map((task) => (
-          <Task
-            key={task.id}
-            task={task}
-            onChange={onChange}
-            onDelete={onDelete}
-            onEdit={onEdit}
-            onUpdate={onUpdate}
-            isEditing={task.id === editingTaskId}
-            editingText={editingTaskText}
-            setEditingTaskText={setEditingTaskText}
-          />
-        ))}
-      </ul>
-    );
-  }
+import Task from '../task/task';
+
+function TaskList({ tasks, onChange, onDelete, onEdit, onUpdate, editingTaskId, editingTaskText, setEditingTaskText }) {
+  return (
+    <ul className="todo-list">
+      {tasks.map((task) => (
+        <Task
+          key={task.id}
+          task={task}
+          onChange={onChange}
+          onDelete={onDelete}
+          onEdit={onEdit}
+          onUpdate={onUpdate}
+          isEditing={task.id === editingTaskId}
+          editingText={editingTaskText}
+          setEditingTaskText={setEditingTaskText}
+        />
+      ))}
+    </ul>
+  );
 }
-
-TaskList.defaultProps = {
-  tasks: [],
-};
 
 TaskList.propTypes = {
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
-      text: PropTypes.string,
-      date: PropTypes.string,
-      checked: PropTypes.bool,
-    }),
+      id: PropTypes.number.isRequired,
+      text: PropTypes.string.isRequired,
+      date: PropTypes.string.isRequired,
+      checked: PropTypes.bool.isRequired,
+    })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  editingTaskId: PropTypes.number,
-  editingTaskText: PropTypes.string,
+  editingTaskId: PropTypes.number.isRequired,
+  editingTaskText: PropTypes.string.isRequired,
   setEditingTaskText: PropTypes.func.isRequired,
 };
+
+export default TaskList;

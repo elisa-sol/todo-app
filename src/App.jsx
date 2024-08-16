@@ -28,6 +28,7 @@ export default class App extends Component {
     this.setTaskFilter = this.setTaskFilter.bind(this);
     this.clearCompletedTasks = this.clearCompletedTasks.bind(this);
     this.getFilteredTasks = this.getFilteredTasks.bind(this);
+    this.onToggleTimer = this.onToggleTimer.bind(this);
   }
 
   handleInputChange(event) {
@@ -43,6 +44,26 @@ export default class App extends Component {
   handleTaskChange(id, checked) {
     this.setState((prevState) => ({
       tasks: prevState.tasks.map((t) => (t.id === id ? { ...t, checked } : t)),
+    }));
+  }
+
+  onToggleTimer(taskId, action) {
+    this.setState((prevState) => ({
+      tasks: prevState.tasks.map((task) => {
+        if (task.id === taskId) {
+          if (action === 'start') {
+            return { ...task, isRunning: true };
+          }
+          if (action === 'pause') {
+            return { ...task, isRunning: false };
+          }
+          if (action === 'tick') {
+            const newTimeRemaining = task.timeRemaining > 0 ? task.timeRemaining - 1 : 0;
+            return { ...task, timeRemaining: newTimeRemaining, isRunning: newTimeRemaining > 0 };
+          }
+        }
+        return task;
+      }),
     }));
   }
 
@@ -77,6 +98,8 @@ export default class App extends Component {
         text: newTask,
         checked: false,
         date: new Date(),
+        timeRemaining: 15 * 60,
+        isRunning: false,
       };
 
       this.setState((prevState) => ({
@@ -138,6 +161,7 @@ export default class App extends Component {
           onDelete={this.deleteTask}
           onEdit={this.editTask}
           onUpdate={this.updateTask}
+          onToggleTimer={this.onToggleTimer}
           editingTaskId={editingTaskId}
           editingTaskText={editingTaskText}
           setEditingTaskText={(text) => this.setState({ editingTaskText: text })}

@@ -5,7 +5,17 @@ import PropTypes from 'prop-types';
 
 import Task from '../task/task';
 
-function TaskList({ tasks, onChange, onDelete, onEdit, onUpdate, editingTaskId, editingTaskText, setEditingTaskText }) {
+function TaskList({
+  tasks,
+  onChange,
+  onDelete,
+  onEdit,
+  onUpdate,
+  onToggleTimer,
+  editingTaskId,
+  editingTaskText,
+  setEditingTaskText,
+}) {
   return (
     <ul className="todo-list">
       {tasks.map((task) => (
@@ -16,6 +26,7 @@ function TaskList({ tasks, onChange, onDelete, onEdit, onUpdate, editingTaskId, 
           onDelete={onDelete}
           onEdit={onEdit}
           onUpdate={onUpdate}
+          onToggleTimer={onToggleTimer}
           isEditing={task.id === editingTaskId}
           editingText={editingTaskText}
           setEditingTaskText={setEditingTaskText}
@@ -32,12 +43,15 @@ TaskList.propTypes = {
       text: PropTypes.string.isRequired,
       date: PropTypes.string.isRequired,
       checked: PropTypes.bool.isRequired,
+      timeElapsed: PropTypes.number.isRequired,
+      isRunning: PropTypes.bool.isRequired,
     })
   ).isRequired,
   onChange: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  onToggleTimer: PropTypes.func.isRequired,
   editingTaskId: PropTypes.number.isRequired,
   editingTaskText: PropTypes.string.isRequired,
   setEditingTaskText: PropTypes.func.isRequired,

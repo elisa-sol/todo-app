@@ -1,6 +1,6 @@
 # React + Vite
 
-Ссылка на vercel: https://todo-app-ecru-five-38.vercel.app/
+Ссылка на vercel: https://hook-todo-app-ecru-five-38.vercel.app/
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

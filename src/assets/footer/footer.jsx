@@ -18,15 +18,12 @@ function Footer({ taskCounter, clearCompletedTasks, setTaskFilter, filter }) {
   );
 }
 
-Footer.defaultProps = {
-  taskCounter: 0,
-  filter: 'all',
-};
-
 Footer.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   taskCounter: PropTypes.number,
   clearCompletedTasks: PropTypes.func.isRequired,
   setTaskFilter: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/require-default-props
   filter: PropTypes.string,
 };
 

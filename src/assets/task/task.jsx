@@ -68,20 +68,17 @@ Task.propTypes = {
     id: PropTypes.number.isRequired,
     text: PropTypes.string.isRequired,
     checked: PropTypes.bool.isRequired,
-    date: PropTypes.string.isRequired,
+    date: PropTypes.instanceOf(Date).isRequired,
   }).isRequired,
   onChange: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/require-default-props
   isEditing: PropTypes.bool,
+  // eslint-disable-next-line react/require-default-props
   editingText: PropTypes.string,
   setEditingTaskText: PropTypes.func.isRequired,
-};
-
-Task.defaultProps = {
-  isEditing: false,
-  editingText: '',
 };
 
 export default Task;

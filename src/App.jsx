@@ -1,58 +1,31 @@
 // верхний компонент
 
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import Footer from './assets/footer/footer';
 import NewTaskForm from './assets/newTaskForm/newTaskForm';
 import TaskList from './assets/taskList/taskList';
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tasks: [],
-      newTask: '',
-      editingTaskId: null,
-      editingTaskText: '',
-      filter: 'all',
-    };
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [editingTaskText, setEditingTaskText] = useState('');
+  const [filter, setFilter] = useState('all');
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.addTask = this.addTask.bind(this);
-    this.deleteTask = this.deleteTask.bind(this);
-    this.editTask = this.editTask.bind(this);
-    this.updateTask = this.updateTask.bind(this);
-    this.handleKeyPress = this.handleKeyPress.bind(this);
-    this.handleTaskChange = this.handleTaskChange.bind(this);
-    this.taskCounter = this.taskCounter.bind(this);
-    this.setTaskFilter = this.setTaskFilter.bind(this);
-    this.clearCompletedTasks = this.clearCompletedTasks.bind(this);
-    this.getFilteredTasks = this.getFilteredTasks.bind(this);
-  }
+  const handleInputChange = (event) => {
+    setNewTask(event.target.value);
+  };
 
-  handleInputChange(event) {
-    this.setState({ newTask: event.target.value });
-  }
+  const handleTaskChange = (id, checked) => {
+    setTasks((prevTasks) => prevTasks.map((t) => (t.id === id ? { ...t, checked } : t)));
+  };
 
-  handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      this.addTask();
-    }
-  }
+  const setTaskFilter = (newFilter) => {
+    setFilter(newFilter);
+  };
 
-  handleTaskChange(id, checked) {
-    this.setState((prevState) => ({
-      tasks: prevState.tasks.map((t) => (t.id === id ? { ...t, checked } : t)),
-    }));
-  }
-
-  setTaskFilter(filter) {
-    this.setState({ filter });
-  }
-
-  getFilteredTasks() {
-    const { tasks, filter } = this.state;
-
+  const getFilteredTasks = () => {
     if (filter === 'all') {
       return tasks;
     }
@@ -66,11 +39,9 @@ export default class App extends Component {
     }
 
     return tasks;
-  }
+  };
 
-  addTask() {
-    const { newTask } = this.state;
-
+  const addTask = () => {
     if (newTask.trim() !== '') {
       const newTaskObject = {
         id: Date.now(),
@@ -79,77 +50,67 @@ export default class App extends Component {
         date: new Date(),
       };
 
-      this.setState((prevState) => ({
-        tasks: [...prevState.tasks, newTaskObject],
-        newTask: '',
-      }));
+      setTasks((prevTasks) => [...prevTasks, newTaskObject]);
+      setNewTask('');
     }
-  }
+  };
 
-  deleteTask(id) {
-    this.setState((prevState) => ({
-      tasks: prevState.tasks.filter((task) => task.id !== id),
-    }));
-  }
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      addTask();
+    }
+  };
 
-  editTask(id, text) {
-    this.setState({ editingTaskId: id, editingTaskText: text });
-  }
+  const deleteTask = (id) => {
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+  };
 
-  updateTask(id, newText) {
-    const { editingTaskText } = this.state;
+  const editTask = (id, text) => {
+    setEditingTaskId(id);
+    setEditingTaskText(text);
+  };
 
+  const updateTask = (id, newText) => {
     if (editingTaskText.trim() !== '') {
-      this.setState((prevState) => ({
-        tasks: prevState.tasks.map((t) => (t.id === id ? { ...t, text: newText } : t)),
-        editingTaskId: null,
-        editingTaskText: '',
-      }));
+      setTasks((prevTasks) => prevTasks.map((t) => (t.id === id ? { ...t, text: newText } : t)));
+      setEditingTaskId(null);
+      setEditingTaskText('');
     }
-  }
+  };
 
-  taskCounter() {
-    const { tasks } = this.state;
+  const taskCounter = () => {
     return tasks.filter((task) => !task.checked).length;
-  }
+  };
 
-  clearCompletedTasks() {
-    this.setState((prevState) => ({
-      tasks: prevState.tasks.filter((task) => !task.checked),
-    }));
-  }
+  const clearCompletedTasks = () => {
+    setTasks((prevTasks) => prevTasks.filter((task) => !task.checked));
+  };
 
-  render() {
-    const { newTask, editingTaskId, editingTaskText, filter } = this.state;
+  return (
+    <div className="todoapp">
+      <h1>todos</h1>
 
-    return (
-      <div className="todoapp">
-        <h1>todos</h1>
+      <NewTaskForm newTask={newTask} handleInputChange={handleInputChange} handleKeyPress={handleKeyPress} />
 
-        <NewTaskForm
-          newTask={newTask}
-          handleInputChange={this.handleInputChange}
-          handleKeyPress={this.handleKeyPress}
-        />
+      <TaskList
+        tasks={getFilteredTasks()}
+        onChange={handleTaskChange}
+        onDelete={deleteTask}
+        onEdit={editTask}
+        onUpdate={updateTask}
+        editingTaskId={editingTaskId}
+        editingTaskText={editingTaskText}
+        setEditingTaskText={setEditingTaskText}
+      />
 
-        <TaskList
-          tasks={this.getFilteredTasks()}
-          onChange={this.handleTaskChange}
-          onDelete={this.deleteTask}
-          onEdit={this.editTask}
-          onUpdate={this.updateTask}
-          editingTaskId={editingTaskId}
-          editingTaskText={editingTaskText}
-          setEditingTaskText={(text) => this.setState({ editingTaskText: text })}
-        />
-
-        <Footer
-          taskCounter={this.taskCounter()}
-          clearCompletedTasks={this.clearCompletedTasks}
-          setTaskFilter={this.setTaskFilter}
-          filter={filter}
-        />
-      </div>
-    );
-  }
+      <Footer
+        taskCounter={taskCounter()}
+        clearCompletedTasks={clearCompletedTasks}
+        setTaskFilter={setTaskFilter}
+        filter={filter}
+      />
+    </div>
+  );
 }
+
+export default App;

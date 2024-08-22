@@ -30,7 +30,7 @@ TaskList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       text: PropTypes.string.isRequired,
-      date: PropTypes.string.isRequired,
+      date: PropTypes.instanceOf(Date).isRequired,
       checked: PropTypes.bool.isRequired,
     })
   ).isRequired,
@@ -38,7 +38,8 @@ TaskList.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
   onUpdate: PropTypes.func.isRequired,
-  editingTaskId: PropTypes.number.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  editingTaskId: PropTypes.number,
   editingTaskText: PropTypes.string.isRequired,
   setEditingTaskText: PropTypes.func.isRequired,
 };
